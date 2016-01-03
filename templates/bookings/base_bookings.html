@@ -1,6 +1,19 @@
 {% extends "base.html" %}
+{% load staticfiles %}
 
 {% block page %}
-<h1>Reservas Frana</h1>
-{% block content %}{% endblock content %}
+<div class="row">
+  <div class="col-md-8">
+    <div class="page-content">
+      <h1 class="page-header m-t-0">Reservas Frana</h1>
+      {% include "_messages.html" %}
+      {% block content %}{% endblock content %}
+    </div>
+  </div>
+  <div class="col-md-4 hidden-xs hidden-sm">
+    <div class="page-sidebar">
+      <img src="{% static "photos.png" %}" width="340">
+    </div>
+  </div>
+</div>
 {% endblock page %}

@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 from __future__ import unicode_literals
 import os
 
+from django.core.urlresolvers import reverse_lazy
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -28,6 +30,13 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+LOGIN_URL = reverse_lazy('bookings:login')
+
+LOGIN_REDIRECT_URL = reverse_lazy('bookings:index')
+
+DATE_FORMAT = 'd/m/Y'
+
+DATE_INPUT_FORMATS = ['%d/%m/%Y']
 
 # Application definition
 
@@ -44,6 +53,8 @@ INSTALLED_APPS = [
     'bootstrap3',
     'constance',
     'constance.backends.database',
+    'django_extensions',
+    'pipeline',
 
     # Own apps
     'bookings',
@@ -132,7 +143,18 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ]
 
+STATICFILES_STORAGE = 'pipeline.storage.PipelineCachedStorage'
+
+STATICFILES_FINDERS = [
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'pipeline.finders.PipelineFinder',
+]
+
 STATIC_URL = '/static/'
+
+
+# Constance
 
 CONSTANCE_BACKEND = 'constance.backends.database.DatabaseBackend'
 
@@ -141,4 +163,34 @@ CONSTANCE_CONFIG = {
     'WEEKEND_PRICE': (80, 'Precio para los fines de semana'),
     'BOOKING_DISABLED': (False, 'Deshabilitar reservas'),
     'BOOKING_DISABLED_CAUSE': ('', 'Causa por la cual están deshabilitadas las reservas'),
+}
+
+
+# Pipeline
+
+PIPELINE = {
+    'PIPELINE_ENABLED': True,
+    'STYLESHEETS': {
+        'styles': {
+            'source_filenames': [
+                'js/jquery.js',
+                'js/d3.js',
+                'js/collections/*.js',
+                'js/application.js',
+            ],
+            'output_filename': 'js/stats.js',
+        }
+    },
+    'COMPILERS': {
+        'pipeline.compilers.sass.SASSCompiler',
+    }
+}
+
+
+# Bootstrap
+
+BOOTSTRAP3 = {
+    'field_renderers': {
+        'default': 'bookings.fields.FieldRenderer'
+    }
 }

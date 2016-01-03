@@ -1,3 +1,4 @@
+{% load staticfiles %}
 <nav class="navbar navbar-inverse navbar-fixed-top">
   <div class="container">
     <div class="navbar-header">
@@ -7,26 +8,40 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">CEITBA</a>
+      <a class="navbar-brand" href="{% url 'bookings:index' %}">CEITBA</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="#">Home</a></li>
-        <li><a href="#about">About</a></li>
-        <li><a href="#contact">Contact</a></li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="#">Action</a></li>
-            <li><a href="#">Another action</a></li>
-            <li><a href="#">Something else here</a></li>
-            <li role="separator" class="divider"></li>
-            <li class="dropdown-header">Nav header</li>
-            <li><a href="#">Separated link</a></li>
-            <li><a href="#">One more separated link</a></li>
-          </ul>
+        {% with url_name=request.resolver_match.url_name %}
+        <li{% if url_name == 'index' %} class="active"{% endif %}>
+          <a href="{% url 'bookings:index' %}">Inicio</a>
         </li>
+        {% if request.user.is_authenticated %}
+        <li{% if url_name == 'book' %} class="active"{% endif %}>
+          <a href="{% url 'bookings:book' %}">Reservar</a>
+        </li>
+        {% endif %}
+        <li{% if url_name == 'contact' %} class="active"{% endif %}>
+          <a href="{% url 'bookings:contact' %}">Contacto</a>
+        </li>
+        {% endwith %}
       </ul>
+      {% if request.user.is_authenticated %}
+      <ul class="nav navbar-nav pull-right">
+        <li><a href="{% url 'bookings:logout' %}">Salir</a></li>
+      </ul>
+      <p class="navbar-text pull-right">
+        <span class="m-r-md">{{ request.user.get_full_name }}</span>
+        {% if request.user.bookerprofile %}
+        <img src="{% static "credits.png" %}" width="16" height="16" alt="Credits"> $ {{ request.user.bookerprofile.credits }}
+        {% endif %}
+      </p>
+      {% else %}
+      <ul class="nav navbar-nav pull-right">
+        <li><a href="{% url 'bookings:signup' %}">Registrarme</a></li>
+        <li><a href="{% url 'bookings:login' %}">Ingresar</a></li>
+      </ul>
+      {% endif %}
     </div><!--/.nav-collapse -->
   </div>
 </nav>

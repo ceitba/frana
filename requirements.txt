@@ -3,3 +3,5 @@ dj-database-url==0.3.0
 django-bootstrap3==6.2.2
 django-constance==1.1.1
 django-localflavor==1.2
+django-pipeline==1.6.4
+django-extensions==1.6.1

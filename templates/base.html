@@ -6,13 +6,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <title>CEITBA</title>
   <link href="{% static "bootstrap/css/bootstrap.min.css" %}" rel="stylesheet">
+  <link href="{% static "bootstrap/css/bootstrap-theme.min.css" %}" rel="stylesheet">
   <link href="{% static "theme.css" %}" rel="stylesheet">
-  <link href='https://fonts.googleapis.com/css?family=Roboto:400,700' rel='stylesheet'>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
 </head>
 <body role="document">
   <div class="container" role="main">
 		{% include "_navbar.html" %}
     {% block page %}{% endblock page %}
   </div>
+  {% block footer_scripts %}
+  <script src="{% static "js/jquery.min.js" %}"></script>
+  <script src="{% static "bootstrap/js/bootstrap.min.js" %}"></script>
+  {% endblock footer_scripts %}
 </body>
 </html>

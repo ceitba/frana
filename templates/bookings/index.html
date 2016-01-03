@@ -1,1 +1,52 @@
 {% extends "bookings/base_bookings.html" %}
+
+{% block content %}
+<p>Bienvenido al sitio de reservas del Frana. Recordá que para hacer nuevas reservas necesitás tener un usuario habilitado.
+  Si todavía no te registraste, completá tus datos y esperá a recibir el mail de confirmación.</p>
+
+<p>Te recordamos que para salir tenés que tener el carnet de timonel actualizado.
+Las reservas estan sujetas a disponibilidad. En caso de que el barco no esté disponible por razones meteorológicas o de mantenimiento
+se te reintegrará el valor total de la reserva.</p>
+
+<h3 class="page-header">Precios</h3>
+
+<div class="list-group">
+<div class="list-group-item pricing-item">
+  <div class="row">
+    <div class="col-md-3 pricing-amount">
+      <p class="lead m-b-0 text-right"><b>${{ weekday_price }}</b></p>
+    </div>
+    <div class="col-md-9 pricing-description">
+      <p class="lead m-b-0">Días de semana</p>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+</div>
+
+<div class="list-group-item pricing-item">
+  <div class="row">
+    <div class="col-md-3 pricing-amount">
+      <p class="lead m-b-0 text-right"><b>${{ weekend_price }}</b></p>
+    </div>
+    <div class="col-md-9 pricing-description">
+      <p class="lead m-b-0">Fines de semana</p>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+</div>
+</div>
+
+<hr>
+
+{% if request.user.is_authenticated %}
+<div class="well text-center">
+  Registrado como {{ request.user.get_full_name }}
+</div>
+{% else %}
+<div class="text-center">
+  <a class="btn btn-lg btn-primary" href="{% url "bookings:signup" %}">Registrarme</a>
+  &nbsp;
+  <a class="btn btn-lg btn-primary" href="{% url "bookings:login" %}">Ingresar</a>
+</div>
+{% endif %}
+{% endblock content %}

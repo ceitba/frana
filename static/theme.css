@@ -1,4 +1,67 @@
+/* colors: #011826, #023859, #03658C, #049DBF, #F1F2EB */
+
+@import url('_utilities.css');
+
 body {
-  margin-top: 60px;
-  font-family: 'Roboto', Helvetica, Arial, sans-serif;
+  background: #F1F2EB url('bg.png');
+  font-family: 'Lato', Helvetica, Arial, sans-serif;
+}
+
+.navbar-inverse {
+  background-color: #2987AD;
+  border-color: #2987AD;
+	background-image: -webkit-linear-gradient(top,#2987AD 0,#096C94 100%);
+	background-image: -o-linear-gradient(top,#2987AD 0,#096C94 100%);
+	background-image: -webkit-gradient(linear,left top,left bottom,from(#2987AD),to(#096C94));
+	background-image: linear-gradient(to bottom,#2987AD 0,#096C94 100%);
+}
+
+.navbar-inverse .navbar-brand {
+  color: white;
+	font-weight: bold;
+}
+
+.navbar-inverse .navbar-nav > li > a {
+  color: white;
+}
+
+.navbar-inverse .navbar-nav>.active>a,
+.navbar-inverse .navbar-nav>.active>a:focus,
+.navbar-inverse .navbar-nav>.active>a:hover {
+  background-color: #023859;
+	background-image: none;
+}
+
+.navbar-inverse .navbar-nav > li > a {
+	text-shadow: 0 1px 0 rgba(0, 0, 0, .5);
+}
+
+.navbar-inverse .navbar-text {
+  color: white
+}
+
+.page-content {
+  margin-top: 80px;
+  min-height: 500px;
+  background-color: white;
+  box-shadow: 0 0 8px #B9B4A8;
+  border-radius: 3px;
+  padding: 40px;
+  margin-bottom: 40px;
+}
+
+.page-sidebar {
+  margin-top: 80px;
+  padding-left: 20px;
+}
+
+.btn-primary {
+	background-image: -webkit-linear-gradient(top,#2987AD 0,#03658C 100%);
+	background-image: -o-linear-gradient(top,#2987AD 0,#03658C 100%);
+	background-image: -webkit-gradient(linear,left top,left bottom,from(#2987AD),to(#03658C));
+	background-image: linear-gradient(to bottom,#2987AD 0,#03658C 100%);
+}
+
+.btn-primary:focus, .btn-primary:hover {
+	background-color: #03658C;
 }
