@@ -14,6 +14,7 @@ from __future__ import unicode_literals
 import os
 
 from django.core.urlresolvers import reverse_lazy
+from django.contrib.messages import constants as messages
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -59,6 +60,12 @@ INSTALLED_APPS = [
     # Own apps
     'bookings',
 ]
+
+if DEBUG:
+    INSTALLED_APPS += [
+        'debug_toolbar'
+    ]
+
 
 MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
@@ -154,6 +161,13 @@ STATICFILES_FINDERS = [
 STATIC_URL = '/static/'
 
 
+# Messages
+
+MESSAGE_TAGS = {
+    messages.ERROR: 'danger',
+}
+
+
 # Constance
 
 CONSTANCE_BACKEND = 'constance.backends.database.DatabaseBackend'
@@ -163,6 +177,7 @@ CONSTANCE_CONFIG = {
     'WEEKEND_PRICE': (80, 'Precio para los fines de semana'),
     'BOOKING_DISABLED': (False, 'Deshabilitar reservas'),
     'BOOKING_DISABLED_CAUSE': ('', 'Causa por la cual están deshabilitadas las reservas'),
+    'BOOKING_DAYS_FUTURE': (14, 'Cantidad de días a futuro que se pueden realizar las reservas'),
 }
 
 

@@ -21,6 +21,9 @@ class SignupForm(forms.ModelForm):
             'dni', 'student_file', 'license', 'license_expiration', 'address',
             'phone_number',
         ]
+        widgets = {
+            'license_expiration': BootstrapDatepickerField()
+        }
 
     @transaction.atomic
     def save(self, **kwargs):
@@ -40,11 +43,8 @@ class SignupForm(forms.ModelForm):
 class BookingForm(forms.ModelForm):
     class Meta:
         model = Booking
-        exclude = ['user', 'pending']
+        fields = ['date', 'shift']
         widgets = {
-            'date': BootstrapDatepickerField()
+            'date': BootstrapDatepickerField(),
+            'shift': forms.RadioSelect(),
         }
-
-    def clean_date(self, value):
-        import pdb; pdb.set_trace()
-        pass

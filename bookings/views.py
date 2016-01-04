@@ -2,7 +2,9 @@
 from constance import config
 from django.contrib.auth.forms import AuthenticationForm
 from django.core.urlresolvers import reverse_lazy
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import redirect
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import FormView
 
@@ -39,9 +41,24 @@ class Login(FormView):
     success_url = reverse_lazy('bookings:index')
 
 
-class Book(LoginRequiredMixin, FormView):
+class Book(SuccessMessageMixin, LoginRequiredMixin, FormView):
     form_class = BookingForm
     template_name = 'bookings/form.html'
+    success_url = reverse_lazy('bookings:index')
+    success_message = 'Gracias. Enseguida recibirás un email confirmando tu reserva.'
+
+    def dispatch(self, request, *args, **kwargs):
+        if config.BOOKING_DISABLED:
+            messages.error(request, config.BOOKING_DISABLED_CAUSE)
+            return redirect(request.META.get('HTTP_REFERER', 'bookings:index'))
+        return super(Book, self).dispatch(request, *args, **kwargs)
+
+    def get_initial(self):
+        return {'user': self.request.user}
+
+    def form_valid(self, form):
+        form.save()
+        return super(Book, self).form_valid(form)
 
 
 class Contact(TemplateView):

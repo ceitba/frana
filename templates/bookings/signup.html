@@ -11,3 +11,8 @@
   </div>
 </form>
 {% endblock content %}
+
+{% block footer_scripts %}
+{{ block.super }}
+{{ form.media }}
+{% endblock %}

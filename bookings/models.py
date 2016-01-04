@@ -1,9 +1,11 @@
 # coding: utf-8
 from __future__ import unicode_literals
+from datetime import date
 
+from constance import config
+from django.core.exceptions import ValidationError
 from django.conf import settings
-from django.db import models
-from model_utils import Choices
+from django.db import models, transaction
 
 
 class BookerProfile(models.Model):
@@ -29,16 +31,62 @@ class Booking(models.Model):
         ('t', 'Tarde'),
     )
 
+    STATUS_CHOICES = (
+        ('c', 'Confirmada'),
+        ('p', 'Pendiente'),
+        ('c', 'Cancelada'),
+    )
+
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
-    date = models.DateTimeField(verbose_name="Fecha")
+    date = models.DateField(verbose_name="Fecha")
     shift = models.CharField(
         max_length=1,
         choices=SHIFT_CHOICES,
+        default='m',
         verbose_name="Turno")
+    status = models.CharField(
+        max_length=1,
+        choices=STATUS_CHOICES,
+        default='c',
+        verbose_name="Estado"
+    )
 
     def __unicode__(self):
         return '{} a la {} por {}'.format(
             self.date, self.get_shift_display(), self.user)
+
+    def clean(self):
+        delta = config.BOOKING_DAYS_FUTURE
+        if (self.date - date.today()).days > delta:
+            msg = 'No puede reservar con más de {delta} días de anticipación.'
+            raise ValidationError(msg.format(delta=delta))
+
+        price = self.get_price()
+        if self.user.bookerprofile.credits < price:
+            msg = 'No tenés créditos suficientes para reservar.'
+            raise ValidationError(msg)
+
+        bookings_count = Booking.objects.filter(
+            date=self.date,
+            shift=self.shift,
+            status='c'
+        ).count()
+        if bookings_count > 0:
+            msg = 'Ya hay una reserva confirmada para esa fecha y turno.'
+            raise ValidationError(msg)
+
+    def get_price(self):
+        if self.date.weekday() in [5, 6]:  # weekend
+            return config.WEEKEND_PRICE
+        else:
+            return config.WEEKDAY_PRICE
+
+    @transaction.atomic
+    def save(self, *args, **kwargs):
+        profile = self.user.bookerprofile
+        profile.credits -= self.get_price()
+        profile.save()
+        super(Booking, self).save(*args, **kwargs)
 
 
 class Credit(models.Model):

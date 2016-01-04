@@ -4,7 +4,7 @@
 
 body {
   background: #F1F2EB url('bg.png');
-  font-family: 'Lato', Helvetica, Arial, sans-serif;
+  font-family: 'Roboto', Helvetica, Arial, sans-serif;
 }
 
 .navbar-inverse {
@@ -28,12 +28,12 @@ body {
 .navbar-inverse .navbar-nav>.active>a,
 .navbar-inverse .navbar-nav>.active>a:focus,
 .navbar-inverse .navbar-nav>.active>a:hover {
-  background-color: #023859;
+  background-color: #135975;
 	background-image: none;
 }
 
 .navbar-inverse .navbar-nav > li > a {
-	text-shadow: 0 1px 0 rgba(0, 0, 0, .5);
+	text-shadow: 0 -1px 0 rgba(0, 0, 0, .3);
 }
 
 .navbar-inverse .navbar-text {
@@ -64,4 +64,8 @@ body {
 
 .btn-primary:focus, .btn-primary:hover {
 	background-color: #03658C;
+}
+
+.form-control, .btn-group-lg > .btn, .btn-lg {
+  border-radius: 3px;
 }
