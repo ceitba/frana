@@ -77,6 +77,11 @@ class BookingForm(forms.Form):
         )
         booking.full_clean()
 
+        expiration = self.user.bookerprofile.license_expiration
+        if expiration < self.cleaned_data['date']:
+            msg = 'No podés hacer reservas con un carnet vencido.'
+            raise ValidationError(msg)
+
         price = booking.get_price()
         if self.user.bookerprofile.credits < price:
             msg = 'No tenés créditos suficientes para reservar.'

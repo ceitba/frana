@@ -1,6 +1,17 @@
 {% extends "bookings/base_bookings.html" %}
 
 {% block content %}
+
+{% if license_expiration < 0 %}
+<div class="alert alert-warning"><strong>Aviso:</strong> Tu carnet está vencido.</div>
+{% elif license_expiration == 0 %}
+<div class="alert alert-warning"><strong>Aviso:</strong> Te recordamos que tu carnet vence hoy.</div>
+{% elif license_expiration == 1 %}
+<div class="alert alert-warning"><strong>Aviso:</strong> Te recordamos que tu carnet vence mañana.</div>
+{% elif license_expiration < 30 %}
+<div class="alert alert-warning"><strong>Aviso:</strong> Te recordamos que tu carnet vence en {{ license_expiration }} días.</div>
+{% endif %}
+
 <p>Bienvenido al sitio de reservas del Frana. Recordá que para hacer nuevas reservas necesitás tener un usuario habilitado.
   Si todavía no te registraste, completá tus datos y esperá a recibir el mail de confirmación.</p>
 

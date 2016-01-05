@@ -1,4 +1,6 @@
 # coding: utf-8
+from datetime import date, timedelta
+
 from constance import config
 from django.contrib.auth.forms import AuthenticationForm
 from django.core.urlresolvers import reverse_lazy
@@ -23,6 +25,11 @@ class Index(TemplateView):
             'weekday_price': config.WEEKDAY_PRICE,
             'weekend_price': config.WEEKEND_PRICE,
         })
+
+        expiration = self.request.user.bookerprofile.license_expiration
+        expiration_delta = expiration - date.today()
+        ctx['license_expiration'] = expiration_delta.days
+
         return ctx
 
 
