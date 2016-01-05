@@ -26,9 +26,10 @@ class Index(TemplateView):
             'weekend_price': config.WEEKEND_PRICE,
         })
 
-        expiration = self.request.user.bookerprofile.license_expiration
-        expiration_delta = expiration - date.today()
-        ctx['license_expiration'] = expiration_delta.days
+        if self.request.user.is_authenticated():
+            expiration = self.request.user.bookerprofile.license_expiration
+            expiration_delta = expiration - date.today()
+            ctx['license_expiration'] = expiration_delta.days
 
         return ctx
 
