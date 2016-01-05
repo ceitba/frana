@@ -30,6 +30,7 @@ class SignupForm(forms.ModelForm):
         email = self.cleaned_data['email']
         if User.objects.filter(email=email).exists():
             raise ValidationError('Este email ya se encuentra registrado.')
+        return email
 
     @transaction.atomic
     def save(self, **kwargs):
