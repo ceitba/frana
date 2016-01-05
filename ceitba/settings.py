@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 from __future__ import unicode_literals
 import os
 
+import dj_database_url
 from django.core.urlresolvers import reverse_lazy
 from django.contrib.messages import constants as messages
 
@@ -38,6 +39,8 @@ LOGIN_REDIRECT_URL = reverse_lazy('bookings:index')
 DATE_FORMAT = 'd/m/Y'
 
 DATE_INPUT_FORMATS = ['%d/%m/%Y']
+
+DATETIME_INPUT_FORMATS = ['%d/%m/%Y']
 
 # Application definition
 
@@ -103,10 +106,7 @@ WSGI_APPLICATION = 'ceitba.wsgi.application'
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
+    'default': dj_database_url.config(default='sqlite:///db.sqlite3')
 }
 
 

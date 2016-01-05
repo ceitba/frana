@@ -17,6 +17,9 @@
           <a href="{% url 'bookings:index' %}">Inicio</a>
         </li>
         {% if request.user.is_authenticated %}
+        <li{% if url_name == 'bookings' %} class="active"{% endif %}>
+          <a href="{% url 'bookings:bookings' %}">Reservas</a>
+        </li>
         <li{% if url_name == 'book' %} class="active"{% endif %}>
           <a href="{% url 'bookings:book' %}">Reservar</a>
         </li>

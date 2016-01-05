@@ -1,6 +1,7 @@
 # coding: utf-8
 from django import forms
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
 from django.db import transaction
 
 from .fields import BootstrapDatepickerField
@@ -40,11 +41,38 @@ class SignupForm(forms.ModelForm):
         return super(SignupForm, self).save(**kwargs)
 
 
-class BookingForm(forms.ModelForm):
-    class Meta:
-        model = Booking
-        fields = ['date', 'shift']
-        widgets = {
-            'date': BootstrapDatepickerField(),
-            'shift': forms.RadioSelect(),
-        }
+class BookingForm(forms.Form):
+    date = forms.DateField(
+        label='Fecha',
+        widget=BootstrapDatepickerField(),
+    )
+    shift = forms.CharField(
+        label='Turno',
+        widget=forms.RadioSelect(choices=Booking.SHIFT_CHOICES),
+    )
+
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user', None)
+        super(BookingForm, self).__init__(*args, **kwargs)
+
+    def clean(self):
+        booking = Booking(
+            date=self.cleaned_data['date'],
+            shift=self.cleaned_data['shift'],
+            user=self.user
+        )
+        booking.full_clean()
+
+        price = booking.get_price()
+        if self.user.bookerprofile.credits < price:
+            msg = 'No tenés créditos suficientes para reservar.'
+            raise ValidationError(msg)
+
+        self.booking = booking
+
+    @transaction.atomic
+    def save(self):
+        profile = self.user.bookerprofile
+        profile.credits -= self.booking.get_price()
+        profile.save()
+        self.booking.save()

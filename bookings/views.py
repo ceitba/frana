@@ -6,10 +6,12 @@ from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect
 from django.views.generic.base import TemplateView
+from django.views.generic.list import ListView
 from django.views.generic.edit import FormView
 
-from .mixins import SuccessMessageMixin
 from .forms import SignupForm, BookingForm
+from .mixins import SuccessMessageMixin
+from .models import Booking
 
 
 class Index(TemplateView):
@@ -41,10 +43,15 @@ class Login(FormView):
     success_url = reverse_lazy('bookings:index')
 
 
+class Bookings(ListView):
+    model = Booking
+    template_name = 'bookings/bookings.html'
+
+
 class Book(SuccessMessageMixin, LoginRequiredMixin, FormView):
     form_class = BookingForm
     template_name = 'bookings/form.html'
-    success_url = reverse_lazy('bookings:index')
+    success_url = reverse_lazy('bookings:bookings')
     success_message = 'Gracias. Enseguida recibirás un email confirmando tu reserva.'
 
     def dispatch(self, request, *args, **kwargs):
@@ -53,8 +60,10 @@ class Book(SuccessMessageMixin, LoginRequiredMixin, FormView):
             return redirect(request.META.get('HTTP_REFERER', 'bookings:index'))
         return super(Book, self).dispatch(request, *args, **kwargs)
 
-    def get_initial(self):
-        return {'user': self.request.user}
+    def get_form_kwargs(self):
+        kwargs = super(Book, self).get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
 
     def form_valid(self, form):
         form.save()

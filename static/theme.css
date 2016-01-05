@@ -40,6 +40,10 @@ body {
   color: white
 }
 
+.navbar-inverse .navbar-toggle {
+  border-color: white;
+}
+
 .page-content {
   margin-top: 80px;
   min-height: 500px;

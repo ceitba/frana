@@ -61,16 +61,12 @@ class Booking(models.Model):
             msg = 'No puede reservar con más de {delta} días de anticipación.'
             raise ValidationError(msg.format(delta=delta))
 
-        price = self.get_price()
-        if self.user.bookerprofile.credits < price:
-            msg = 'No tenés créditos suficientes para reservar.'
-            raise ValidationError(msg)
-
         bookings_count = Booking.objects.filter(
             date=self.date,
             shift=self.shift,
             status='c'
         ).count()
+
         if bookings_count > 0:
             msg = 'Ya hay una reserva confirmada para esa fecha y turno.'
             raise ValidationError(msg)
@@ -80,13 +76,6 @@ class Booking(models.Model):
             return config.WEEKEND_PRICE
         else:
             return config.WEEKDAY_PRICE
-
-    @transaction.atomic
-    def save(self, *args, **kwargs):
-        profile = self.user.bookerprofile
-        profile.credits -= self.get_price()
-        profile.save()
-        super(Booking, self).save(*args, **kwargs)
 
 
 class Credit(models.Model):
