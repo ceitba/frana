@@ -30,7 +30,7 @@ SECRET_KEY = 'd-u2-!18(xgc3s-_s40e_1c_bx@+2z(wjpz2q1c^=d*ht!y*y!'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 LOGIN_URL = reverse_lazy('bookings:login')
 
