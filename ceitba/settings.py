@@ -158,6 +158,7 @@ STATICFILES_FINDERS = [
     'pipeline.finders.PipelineFinder',
 ]
 
+STATIC_ROOT = 'staticfiles'
 STATIC_URL = '/static/'
 
 
