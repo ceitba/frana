@@ -19,7 +19,7 @@ class BookerProfile(models.Model):
     address = models.CharField(max_length=200, verbose_name="Dirección")
     phone_number = models.CharField(max_length=16, verbose_name="Teléfono")
     student_file = models.PositiveIntegerField(verbose_name="Legajo")
-    credits = models.IntegerField(default=0, verbose_name="Créditos")
+    credits = models.IntegerField(default=1000, verbose_name="Créditos")  # TODO: Change this once in production
 
     def __unicode__(self):
         return self.user.get_full_name()
