@@ -1,4 +1,6 @@
 # coding: utf-8
+from datetime import date
+
 from django import forms
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
@@ -31,6 +33,12 @@ class SignupForm(forms.ModelForm):
         if User.objects.filter(email=email).exists():
             raise ValidationError('Este email ya se encuentra registrado.')
         return email
+
+    def clean_license_expiration(self):
+        expiration = self.cleaned_data['license_expiration']
+        if expiration < date.today():
+            raise ValidationError('El carnet está vencido.')
+        return expiration
 
     @transaction.atomic
     def save(self, **kwargs):
