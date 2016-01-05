@@ -58,7 +58,7 @@ INSTALLED_APPS = [
     'constance',
     'constance.backends.database',
     'django_extensions',
-    'pipeline',
+    # 'pipeline',
 
     # Own apps
     'bookings',
@@ -150,12 +150,11 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ]
 
-STATICFILES_STORAGE = 'pipeline.storage.PipelineCachedStorage'
+STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 
 STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-    'pipeline.finders.PipelineFinder',
 ]
 
 STATIC_ROOT = 'staticfiles'
@@ -204,7 +203,7 @@ CONSTANCE_CONFIG = {
 # Pipeline
 
 PIPELINE = {
-    'PIPELINE_ENABLED': True,
+    'PIPELINE_ENABLED': False,
     'STYLESHEETS': {
         'styles': {
             'source_filenames': [
