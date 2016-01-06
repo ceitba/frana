@@ -56,11 +56,6 @@ class Booking(models.Model):
             self.date, self.get_shift_display(), self.user)
 
     def clean(self):
-        delta = config.BOOKING_DAYS_FUTURE
-        if (self.date - date.today()).days > delta:
-            msg = 'No puede reservar con más de {delta} días de anticipación.'
-            raise ValidationError(msg.format(delta=delta))
-
         bookings_count = Booking.objects.filter(
             date=self.date,
             shift=self.shift,

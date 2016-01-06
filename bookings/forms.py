@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 from datetime import date, timedelta
 
+from constance import config
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.password_validation import password_validators_help_text_html, validate_password
@@ -98,15 +99,31 @@ class BookingForm(forms.Form):
     def __init__(self, *args, **kwargs):
         self.user = kwargs.pop('user', None)
         super(BookingForm, self).__init__(*args, **kwargs)
-        self.fields['date'].widget = BootstrapDatepickerField(datepicker={
-            'date-start-date': date.today().strftime('%d/%m/%Y'),
-            'date-end-date': (date.today() + timedelta(days=14)).strftime('%d/%m/%Y'),
-        })
+        self.fields['date'].widget = BootstrapDatepickerField(
+            attrs={'required': 'required'},
+            datepicker={
+                'date-start-date': date.today().strftime('%d/%m/%Y'),
+                'date-end-date': (date.today() + timedelta(days=14)).strftime('%d/%m/%Y'),
+            }
+        )
 
     def clean(self):
+        super(BookingForm, self).clean()
+
+        date = self.cleaned_data.get('date', None)
+        shift = self.cleaned_data.get('shift', None)
+
+        if not date or not shift:
+            return
+
+        delta = config.BOOKING_DAYS_FUTURE
+        if (date - date.today()).days > delta:
+            msg = 'No puede reservar con más de {delta} días de anticipación.'
+            raise ValidationError(msg.format(delta=delta))
+
         booking = Booking(
-            date=self.cleaned_data['date'],
-            shift=self.cleaned_data['shift'],
+            date=date,
+            shift=shift,
             user=self.user
         )
         booking.full_clean()
