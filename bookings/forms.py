@@ -94,6 +94,7 @@ class BookingForm(forms.Form):
     date = forms.DateField(label='Fecha')
     shift = forms.CharField(
         label='Turno',
+        help_text='Los turnos son de <b>8 a 13</b> y de <b>13 a 18</b>.',
         widget=forms.RadioSelect(choices=Booking.SHIFT_CHOICES),
     )
 
