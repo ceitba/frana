@@ -34,6 +34,13 @@ class SignupForm(forms.ModelForm):
             raise ValidationError('Este email ya se encuentra registrado.')
         return email
 
+    def clean_confirm_password(self):
+        password = self.cleaned_data['password']
+        confirm_password = self.cleaned_data['confirm_password']
+        if password != confirm_password:
+            raise ValidationError('Las contraseñas no coinciden.')
+        return confirm_password
+
     def clean_license_expiration(self):
         expiration = self.cleaned_data['license_expiration']
         if expiration < date.today():
