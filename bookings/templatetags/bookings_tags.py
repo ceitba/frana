@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 from datetime import date, timedelta
 from itertools import groupby
 
+from constance import config
 from django import template
 from django.core.urlresolvers import reverse
 from django.template.defaultfilters import date as date_filter
@@ -22,7 +23,7 @@ def date_range(start, end):
 @register.simple_tag(name='calendar', takes_context=True)
 def calendar(context, booking_list):
     start = date.today()
-    end = date.today() + timedelta(days=14)
+    end = date.today() + timedelta(days=config.BOOKING_DAYS_FUTURE)
 
     bookings = groupby(booking_list, lambda b: b.date)
     bookings_by_day = {}

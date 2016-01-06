@@ -103,7 +103,7 @@ class BookingForm(forms.Form):
             attrs={'required': 'required'},
             datepicker={
                 'date-start-date': date.today().strftime('%d/%m/%Y'),
-                'date-end-date': (date.today() + timedelta(days=14)).strftime('%d/%m/%Y'),
+                'date-end-date': (date.today() + timedelta(days=config.BOOKING_DAYS_FUTURE)).strftime('%d/%m/%Y'),
             }
         )
 
