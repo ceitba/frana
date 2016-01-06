@@ -46,6 +46,6 @@ def calendar(booking_list):
                     booking.user.get_full_name()))
             output.append('</div>')
         else:
-            output.append(format_html('<p>{}</p>', 'No hay reservas para este día.'))
+            output.append(format_html('<p class="text-muted">{}</p>', 'No hay reservas para este día.'))
 
     return mark_safe(''.join(output))
