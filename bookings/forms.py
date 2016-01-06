@@ -15,7 +15,10 @@ from .models import BookerProfile, Booking
 class SignupForm(forms.ModelForm):
     first_name = forms.CharField(label="Nombre")
     last_name = forms.CharField(label="Apellido(s)")
-    email = forms.EmailField(label="Email")
+    email = forms.EmailField(
+        label="Email",
+        help_text='Usa tu cuenta @itba.edu.ar.',
+    )
     password = forms.CharField(
         label="Contraseña",
         widget=forms.PasswordInput(),
@@ -39,6 +42,8 @@ class SignupForm(forms.ModelForm):
 
     def clean_email(self):
         email = self.cleaned_data['email']
+        if not email.endswith('@itba.edu.ar'):
+            raise ValidationError('El email tiene que terminar en @itba.edu.ar.')
         if User.objects.filter(email=email).exists():
             raise ValidationError('Este email ya se encuentra registrado.')
         return email
