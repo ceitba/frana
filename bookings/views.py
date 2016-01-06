@@ -13,7 +13,7 @@ from django.views.generic.detail import DetailView
 from django.views.generic.edit import FormView
 
 from .forms import SignupForm, BookingForm
-from .mixins import SuccessMessageMixin
+from .mixins import AnonymousRequiredMixin, SuccessMessageMixin
 from .models import Booking
 
 
@@ -35,21 +35,18 @@ class Index(TemplateView):
         return ctx
 
 
-class Signup(SuccessMessageMixin, FormView):
+class Signup(AnonymousRequiredMixin, SuccessMessageMixin, FormView):
     form_class = SignupForm
     template_name = 'bookings/signup.html'
     success_url = reverse_lazy('bookings:index')
     success_message = 'Gracias por registrarte. Pronto recibirás un email de confirmación.'
 
+    def test_func(self):
+        return self.request.user.is_anonymous()
+
     def form_valid(self, form):
         form.save()
         return super(Signup, self).form_valid(form)
-
-
-class Login(FormView):
-    form_class = AuthenticationForm
-    template_name = 'bookings/login.html'
-    success_url = reverse_lazy('bookings:index')
 
 
 class Bookings(LoginRequiredMixin, ListView):
