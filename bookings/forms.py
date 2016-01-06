@@ -86,7 +86,8 @@ class SignupForm(forms.ModelForm):
         user.save()
 
         self.instance.user = user
-        return super(SignupForm, self).save(**kwargs)
+        super(SignupForm, self).save(**kwargs)
+        return user
 
 
 class BookingForm(forms.Form):

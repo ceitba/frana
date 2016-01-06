@@ -12,6 +12,7 @@ from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import FormView
 
+from .emails import SignupConfirmationEmail
 from .forms import SignupForm, BookingForm
 from .mixins import AnonymousRequiredMixin, SuccessMessageMixin
 from .models import Booking
@@ -45,7 +46,8 @@ class Signup(AnonymousRequiredMixin, SuccessMessageMixin, FormView):
         return self.request.user.is_anonymous()
 
     def form_valid(self, form):
-        form.save()
+        user = form.save()
+        SignupConfirmationEmail(user).send()
         return super(Signup, self).form_valid(form)
 
 
