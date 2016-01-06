@@ -1,8 +1,10 @@
 # coding: utf-8
+from __future__ import unicode_literals
 from datetime import date
 
 from django import forms
 from django.contrib.auth.models import User
+from django.contrib.auth.password_validation import password_validators_help_text_html, validate_password
 from django.core.exceptions import ValidationError
 from django.db import transaction
 
@@ -14,8 +16,15 @@ class SignupForm(forms.ModelForm):
     first_name = forms.CharField(label="Nombre")
     last_name = forms.CharField(label="Apellido(s)")
     email = forms.EmailField(label="Email")
-    password = forms.CharField(widget=forms.PasswordInput(), label="Contraseña")
-    confirm_password = forms.CharField(widget=forms.PasswordInput(), label="Confirmar contraseña")
+    password = forms.CharField(
+        label="Contraseña",
+        widget=forms.PasswordInput(),
+        help_text=password_validators_help_text_html(),
+    )
+    confirm_password = forms.CharField(
+        label="Confirmar contraseña",
+        widget=forms.PasswordInput(),
+    )
 
     class Meta:
         model = BookerProfile
@@ -34,8 +43,20 @@ class SignupForm(forms.ModelForm):
             raise ValidationError('Este email ya se encuentra registrado.')
         return email
 
-    def clean_confirm_password(self):
+    def clean_password(self):
         password = self.cleaned_data['password']
+
+        # create a temporary user to pass to validate_password
+        user = User(
+            first_name=self.cleaned_data['first_name'],
+            last_name=self.cleaned_data['last_name'],
+            email=self.data['email'],
+        )
+        validate_password(password, user)
+        return password
+
+    def clean_confirm_password(self):
+        password = self.data['password']
         confirm_password = self.cleaned_data['confirm_password']
         if password != confirm_password:
             raise ValidationError('Las contraseñas no coinciden.')
