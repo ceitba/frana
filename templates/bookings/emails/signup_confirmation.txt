@@ -1,0 +1,11 @@
+Hola {{ user.first_name }},
+
+Gracias por registrarte en la web de reservas del Frana.
+
+Te recordamos que pases por la oficina del CEITBA para que tu usuario quede habilitado.
+
+También podés cargar créditos o configurar el débito automático a tu factura de la universidad desde la misma oficina.
+
+Atentamente,
+
+CEITBA
