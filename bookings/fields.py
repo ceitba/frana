@@ -5,6 +5,14 @@ from django import forms
 
 
 class BootstrapDatepickerField(forms.DateInput):
+    DEFAULT_DATEPICKER = {
+        'provide': 'datepicker',
+        'date-format': 'dd/mm/yyyy',
+        'date-autoclose': 'true',
+        'date-today-highlight': 'true',
+        'date-language': 'es',
+    }
+
     class Media:
         css = {
             'all': ('bootstrap-datepicker/css/bootstrap-datepicker3.min.css',)
@@ -14,6 +22,13 @@ class BootstrapDatepickerField(forms.DateInput):
             'bootstrap-datepicker/locales/bootstrap-datepicker.es.min.js'
         )
 
+    def __init__(self, **kwargs):
+        datepicker = kwargs.pop('datepicker', {})
+        self.datepicker = self.DEFAULT_DATEPICKER.copy()
+        self.datepicker.update(datepicker)
+
+        super(BootstrapDatepickerField, self).__init__(**kwargs)
+
 
 class FieldRenderer(BaseFieldRenderer):
     def __init__(self, field, *args, **kwargs):
@@ -21,16 +36,8 @@ class FieldRenderer(BaseFieldRenderer):
 
     def make_input_group(self, html):
         if isinstance(self.widget, BootstrapDatepickerField):
-            attrs = {
-                'data-provide': 'datepicker',
-                'data-date-format': 'dd/mm/yyyy',
-                'data-date-autoclose': 'true',
-                'data-date-start-date': date.today().strftime('%d/%m/%Y'),
-                'data-date-today-highlight': 'true',
-                'data-date-language': 'es',
-            }
-            attrs = ['{name}="{value}"'.format(name=name, value=value)
-                     for name, value in attrs.iteritems()]
+            attrs = ['data-{name}="{value}"'.format(name=name, value=value)
+                     for name, value in self.widget.datepicker.iteritems()]
             attrs = ' '.join(attrs)
             after = '<span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>'
             html = '<div class="input-group date" {attrs}>{html}{after}</div>'.format(

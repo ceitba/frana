@@ -1,6 +1,6 @@
 # coding: utf-8
 from __future__ import unicode_literals
-from datetime import date
+from datetime import date, timedelta
 
 from django import forms
 from django.contrib.auth.models import User
@@ -89,10 +89,7 @@ class SignupForm(forms.ModelForm):
 
 
 class BookingForm(forms.Form):
-    date = forms.DateField(
-        label='Fecha',
-        widget=BootstrapDatepickerField(),
-    )
+    date = forms.DateField(label='Fecha')
     shift = forms.CharField(
         label='Turno',
         widget=forms.RadioSelect(choices=Booking.SHIFT_CHOICES),
@@ -101,6 +98,10 @@ class BookingForm(forms.Form):
     def __init__(self, *args, **kwargs):
         self.user = kwargs.pop('user', None)
         super(BookingForm, self).__init__(*args, **kwargs)
+        self.fields['date'].widget = BootstrapDatepickerField(datepicker={
+            'date-start-date': date.today().strftime('%d/%m/%Y'),
+            'date-end-date': (date.today() + timedelta(days=14)).strftime('%d/%m/%Y'),
+        })
 
     def clean(self):
         booking = Booking(
