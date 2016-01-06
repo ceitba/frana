@@ -4,3 +4,12 @@
 {% block content %}
 {% calendar booking_list %}
 {% endblock content %}
+
+{% block footer_scripts %}
+{{ block.super }}
+<script>
+  $(function() {
+    $('[data-toggle="tooltip"]').tooltip();
+  });
+</script>
+{% endblock footer_scripts %}

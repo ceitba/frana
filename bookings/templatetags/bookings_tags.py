@@ -52,7 +52,7 @@ def calendar(context, booking_list):
                 output.append(format_html('<div class="list-group-item"><div class="row"><div class="col-md-4">{} {}</div> <div class="col-md-6"><span style="position: relative; top: 1px;">{}</span></div><div class="col-md-2 text-right">{}</div></div></div>',
                     format_html('<span class="label label-{}">{}</span>', label_classes[booking.status], booking.get_status_display()),
                     format_html('<span class="label label-info">Turno {}</span>', booking.get_shift_display()),
-                    booking.user.get_full_name(),
+                    format_html('<span data-toggle="tooltip" title="{}">{}</span>', booking.user.email, booking.user.get_full_name()),
                     actions,
                 ))
             output.append('</div>')
