@@ -4,6 +4,7 @@ from datetime import date, timedelta
 from itertools import groupby
 
 from django import template
+from django.core.urlresolvers import reverse
 from django.template.defaultfilters import date as date_filter
 from django.utils.html import format_html
 from django.utils.safestring import mark_safe
@@ -18,8 +19,8 @@ def date_range(start, end):
         date = date + timedelta(days=1)
 
 
-@register.simple_tag(name='calendar')
-def calendar(booking_list):
+@register.simple_tag(name='calendar', takes_context=True)
+def calendar(context, booking_list):
     start = date.today()
     end = date.today() + timedelta(days=14)
 
@@ -40,10 +41,19 @@ def calendar(booking_list):
         if bookings_by_day.get(d, None):
             output.append('<div class="list-group">')
             for booking in bookings_by_day[d]:
-                output.append(format_html('<div class="list-group-item"><div class="row"><div class="col-md-4">{} {}</div> <div class="col-md-8"><span style="position: relative; top: 1px;">{}</span></div></div></div>',
-                    mark_safe('<span class="label label-success">Confirmada</span>'),
-                    mark_safe('<span class="label label-info">Turno {}</span>'.format(booking.get_shift_display())),
-                    booking.user.get_full_name()))
+                if booking.status != 'x' and booking.user == context['request'].user:
+                    actions = format_html('<a class="btn btn-xs btn-link" href="{}">Cancelar</a>', reverse('bookings:cancel', kwargs={'pk': booking.pk}))
+                else:
+                    actions = ''
+
+                label_classes = {'x': 'danger', 'c': 'success', 'p': 'warning'}
+
+                output.append(format_html('<div class="list-group-item"><div class="row"><div class="col-md-4">{} {}</div> <div class="col-md-6"><span style="position: relative; top: 1px;">{}</span></div><div class="col-md-2 text-right">{}</div></div></div>',
+                    format_html('<span class="label label-{}">{}</span>', label_classes[booking.status], booking.get_status_display()),
+                    format_html('<span class="label label-info">Turno {}</span>', booking.get_shift_display()),
+                    booking.user.get_full_name(),
+                    actions,
+                ))
             output.append('</div>')
         else:
             output.append(format_html('<p class="text-muted">{}</p>', 'No hay reservas para este día.'))

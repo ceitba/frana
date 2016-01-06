@@ -34,7 +34,7 @@ class Booking(models.Model):
     STATUS_CHOICES = (
         ('c', 'Confirmada'),
         ('p', 'Pendiente'),
-        ('c', 'Cancelada'),
+        ('x', 'Cancelada'),
     )
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL)

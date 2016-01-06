@@ -1,5 +1,5 @@
 # coding: utf-8
-from datetime import date, timedelta
+from datetime import date
 
 from constance import config
 from django.contrib.auth.forms import AuthenticationForm
@@ -9,6 +9,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect
 from django.views.generic.base import TemplateView
 from django.views.generic.list import ListView
+from django.views.generic.detail import DetailView
 from django.views.generic.edit import FormView
 
 from .forms import SignupForm, BookingForm
@@ -51,7 +52,7 @@ class Login(FormView):
     success_url = reverse_lazy('bookings:index')
 
 
-class Bookings(ListView):
+class Bookings(LoginRequiredMixin, ListView):
     model = Booking
     template_name = 'bookings/bookings.html'
 
@@ -76,6 +77,20 @@ class Book(SuccessMessageMixin, LoginRequiredMixin, FormView):
     def form_valid(self, form):
         form.save()
         return super(Book, self).form_valid(form)
+
+
+class CancelBooking(LoginRequiredMixin, DetailView):
+    model = Booking
+    context_object_name = 'booking'
+    template_name = 'bookings/cancel.html'
+
+    def post(self, request, *args, **kwargs):
+        booking = self.get_object()
+        booking.status = 'x'
+        booking.save()
+        import pdb; pdb.set_trace()
+        messages.success(request, 'La reserva fue cancelada.')
+        return redirect('bookings:bookings')
 
 
 class Contact(TemplateView):
