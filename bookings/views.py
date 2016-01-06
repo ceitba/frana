@@ -88,7 +88,6 @@ class CancelBooking(LoginRequiredMixin, DetailView):
         booking = self.get_object()
         booking.status = 'x'
         booking.save()
-        import pdb; pdb.set_trace()
         messages.success(request, 'La reserva fue cancelada.')
         return redirect('bookings:bookings')
 
