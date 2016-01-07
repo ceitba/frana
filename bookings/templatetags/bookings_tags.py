@@ -1,7 +1,6 @@
 # coding: utf-8
 from __future__ import unicode_literals
 from datetime import date, timedelta
-from itertools import groupby
 
 from constance import config
 from django import template
@@ -20,15 +19,21 @@ def date_range(start, end):
         date = date + timedelta(days=1)
 
 
+def group_by(iterable, fn):
+    rv = {}
+    for obj in iterable:
+        key = fn(obj)
+        rv.setdefault(key, [])
+        rv[key].append(obj)
+    return rv
+
+
 @register.simple_tag(name='calendar', takes_context=True)
 def calendar(context, booking_list):
     start = date.today()
     end = date.today() + timedelta(days=config.BOOKING_DAYS_FUTURE)
 
-    bookings = groupby(booking_list, lambda b: b.date)
-    bookings_by_day = {}
-    for day, bookings_for_day in bookings:
-        bookings_by_day[day] = list(bookings_for_day)
+    bookings_by_day = group_by(booking_list, lambda b: b.date)
 
     output = []
     for d in date_range(start, end):
