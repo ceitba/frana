@@ -12,8 +12,8 @@
     <div class="page-footer">
       <p class="pull-left">&copy; {% now 'Y' %} CEITBA</p>
       <p class="pull-right">
-        <a href="#">Política de Privacidad</a>
-        &bull; <a href="#">Términos y Condiciones</a>
+        <a href="{% url "bookings:privacy" %}">Política de Privacidad</a>
+        &bull; <a href="{% url "bookings:terms" %}">Términos y Condiciones</a>
       </p>
     </div>
   </div>

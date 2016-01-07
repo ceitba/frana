@@ -1,5 +1,6 @@
 from django.conf.urls import url
 import django.contrib.auth.views as auth_views
+import django.contrib.flatpages.views as flatpages_views
 
 from . import views
 from .decorators import anonymous_required
@@ -13,4 +14,7 @@ urlpatterns = [
     url(r'^(?P<pk>\d+)/cancel$', views.CancelBooking.as_view(), name='cancel'),
     url(r'^new$', views.Book.as_view(), name='book'),
     url(r'^contact$', views.Contact.as_view(), name='contact'),
+    url(r'^privacy/', flatpages_views.flatpage, {'url': '/privacy/'}, name='privacy'),
+    url(r'^terms/', flatpages_views.flatpage, {'url': '/terms/'}, name='terms'),
+    url(r'^documents/', flatpages_views.flatpage, {'url': '/documents/'}, name='documents'),
 ]

@@ -52,6 +52,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+    'django.contrib.flatpages',
 
     # Third-party apps
     'bootstrap3',
@@ -100,6 +102,8 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'ceitba.wsgi.application'
+
+SITE_ID = 1
 
 
 # Database
