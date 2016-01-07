@@ -3,7 +3,7 @@
 @import url('_utilities.css');
 
 body {
-  background: #F1F2EB url('bg.png');
+  background: #F1F2EB url('../img/bg.png');
   font-family: 'Roboto', Helvetica, Arial, sans-serif;
 }
 
