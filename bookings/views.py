@@ -99,7 +99,7 @@ class CancelBooking(LoginRequiredMixin, DetailView):
         booking = self.get_object()
         booking.status = 'x'
         booking.save()
-        messages.success(request, 'La reserva fue cancelada.')
+        messages.success(request, 'Tu reserva fue cancelada.')
         BookingCancelledEmail(booking).send()
         return redirect('bookings:bookings')
 
