@@ -2,7 +2,6 @@
 from datetime import date
 
 from constance import config
-from django.contrib.auth.forms import AuthenticationForm
 from django.core.urlresolvers import reverse_lazy
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
