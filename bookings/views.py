@@ -2,6 +2,7 @@
 from datetime import date
 
 from constance import config
+from django.core.exceptions import PermissionDenied
 from django.core.urlresolvers import reverse_lazy
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -88,6 +89,11 @@ class CancelBooking(LoginRequiredMixin, DetailView):
     model = Booking
     context_object_name = 'booking'
     template_name = 'bookings/cancel.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        if self.get_object().user != self.request.user:
+            raise PermissionDenied()
+        return super(CancelBooking, self).dispatch(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
         booking = self.get_object()
