@@ -28,7 +28,9 @@ body {
 
 .navbar-inverse .navbar-nav>.active>a,
 .navbar-inverse .navbar-nav>.active>a:focus,
-.navbar-inverse .navbar-nav>.active>a:hover {
+.navbar-inverse .navbar-nav>.active>a:hover,
+.navbar-inverse .navbar-nav>.open>a,
+.navbar-inverse .navbar-nav>.open>a:hover {
   background-color: #135975;
 	background-image: none;
 }
@@ -101,5 +103,10 @@ body {
 }
 
 .negative-credits {
-  color: #FF7676;
+  color: red;
+}
+
+.dropdown-text-item {
+  padding: 3px 20px;
+  color: #777;
 }

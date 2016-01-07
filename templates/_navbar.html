@@ -30,17 +30,22 @@
       </ul>
       {% if request.user.is_authenticated %}
       <ul class="nav navbar-nav pull-right">
-        <li><a href="{% url 'bookings:logout' %}">Salir</a></li>
+        <li class="dropdown">
+          <a data-target="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+            {{ request.user.get_full_name }}
+            <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dLabel">
+            <li class="dropdown-text-item">
+              Crédito:
+              {% with credits=request.user.bookerprofile.credits %}
+              $ {% if credits >= 0 %}{{ credits }}{% else %}<b class="negative-credits">{{ credits }}</b>{% endif %}
+              {% endwith %}
+            </li>
+            <li><a href="{% url 'bookings:logout' %}">Salir</a></li>
+          </ul>
+        </li>
       </ul>
-      <p class="navbar-text pull-right">
-        <span class="m-r-md">{{ request.user.get_full_name }}</span>
-        {% if request.user.bookerprofile %}
-        {% with credits=request.user.bookerprofile.credits %}
-        <img src="{% static "img/credits.png" %}" width="16" height="16" alt="Credits">
-        $ {% if credits >= 0 %}{{ credits }}{% else %}<b class="negative-credits">{{ credits }}</b>{% endif %}
-        {% endwith %}
-        {% endif %}
-      </p>
       {% else %}
       <ul class="nav navbar-nav pull-right">
         <li{% if url_name == 'signup' %} class="active"{% endif %}><a href="{% url 'bookings:signup' %}">Registrarme</a></li>
