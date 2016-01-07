@@ -3,9 +3,10 @@ from __future__ import unicode_literals
 from datetime import date
 
 from constance import config
-from django.core.exceptions import ValidationError
 from django.conf import settings
+from django.core.exceptions import ValidationError
 from django.db import models, transaction
+from django_extensions.db.models import TimeStampedModel
 
 
 class BookerProfile(models.Model):
@@ -26,7 +27,7 @@ class BookerProfile(models.Model):
         return self.user.get_full_name()
 
 
-class Booking(models.Model):
+class Booking(TimeStampedModel):
     SHIFT_CHOICES = (
         ('m', 'Mañana'),
         ('t', 'Tarde'),
