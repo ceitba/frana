@@ -196,7 +196,7 @@ EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', '')
 EMAIL_PORT = int(os.environ.get('EMAIL_PORT', '25'))
 EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS', 'False') == 'True'
 
-DEFAULT_FROM_EMAIL = 'ceitba@itba.edu.ar'
+DEFAULT_FROM_EMAIL = 'CEITBA <ceitba@itba.edu.ar>'
 
 
 # Constance
