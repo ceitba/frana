@@ -12,7 +12,9 @@ from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import FormView
 
-from .emails import SignupConfirmationEmail
+from .emails import (
+    SignupConfirmationEmail, BookingConfirmationEmail, BookingCancelledEmail
+)
 from .forms import SignupForm, BookingForm
 from .mixins import AnonymousRequiredMixin, SuccessMessageMixin
 from .models import Booking
@@ -74,7 +76,8 @@ class Book(SuccessMessageMixin, LoginRequiredMixin, FormView):
         return kwargs
 
     def form_valid(self, form):
-        form.save()
+        booking = form.save()
+        BookingConfirmationEmail(booking).send()
         return super(Book, self).form_valid(form)
 
 
@@ -88,6 +91,7 @@ class CancelBooking(LoginRequiredMixin, DetailView):
         booking.status = 'x'
         booking.save()
         messages.success(request, 'La reserva fue cancelada.')
+        BookingCancelledEmail(booking).send()
         return redirect('bookings:bookings')
 
 

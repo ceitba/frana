@@ -1,0 +1,7 @@
+Hola {{ booking.user.first_name }},
+
+Tu reserva del Frana para el {{ booking.date|date:'l j' }} a la {{ booking.get_shift_display|lower }} ha sido cancelada.
+
+Atentamente,
+
+CEITBA

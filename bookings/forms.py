@@ -148,3 +148,4 @@ class BookingForm(forms.Form):
         profile.credits -= self.booking.get_price()
         profile.save()
         self.booking.save()
+        return self.booking
