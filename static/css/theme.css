@@ -150,6 +150,7 @@ body {
 @media (max-width: 767px) {
   .page-content {
     padding: 20px;
+    min-height: 300px;
   }
 
   .page-header h1 {
