@@ -13,11 +13,11 @@
       {% block content %}{% endblock content %}
     </div>
     <div class="page-footer">
-      <p class="pull-left">&copy; {% now 'Y' %} CEITBA</p>
-      <p class="pull-right">
+      <p class="footer-right">
         <a href="{% url "bookings:privacy" %}">Política de Privacidad</a>
         &bull; <a href="{% url "bookings:terms" %}">Términos y Condiciones</a>
       </p>
+      <p class="footer-left">&copy; {% now 'Y' %} CEITBA</p>
     </div>
   </div>
   <div class="col-md-4 hidden-xs hidden-sm">
