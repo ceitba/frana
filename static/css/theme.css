@@ -45,6 +45,14 @@ body {
   border-color: white;
 }
 
+.page-header {
+  overflow: auto;
+}
+
+.page-actions {
+  margin-top: 3px;
+}
+
 .page-content {
   margin-top: 80px;
   min-height: 500px;

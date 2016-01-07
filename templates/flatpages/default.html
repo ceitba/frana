@@ -1,6 +1,9 @@
 {% extends "bookings/base_bookings.html" %}
 
+{% block title %}
+{{ flatpage.title }}
+{% endblock title %}
+
 {% block content %}
-<h4>{{ flatpage.title }}</h4>
 {{ flatpage.content }}
 {% endblock %}

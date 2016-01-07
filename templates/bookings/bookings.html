@@ -1,6 +1,13 @@
 {% extends "bookings/base_bookings.html" %}
 {% load bookings_tags %}
 
+{% block page_actions %}
+<a class="btn btn-default" href="{% url "bookings:book" %}">
+  <span class="glyphicon glyphicon-plus"></span>
+  Reservar
+</a>
+{% endblock page_actions %}
+
 {% block content %}
 {% calendar booking_list %}
 {% endblock content %}
