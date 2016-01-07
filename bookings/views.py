@@ -56,6 +56,10 @@ class Bookings(LoginRequiredMixin, ListView):
     model = Booking
     template_name = 'bookings/bookings.html'
 
+    def get_queryset(self):
+        qs = super(Bookings, self).get_queryset()
+        return qs.filter(date__gte=date.today()).prefetch_related('user')
+
 
 class Book(SuccessMessageMixin, LoginRequiredMixin, FormView):
     form_class = BookingForm
