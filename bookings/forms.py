@@ -118,6 +118,9 @@ class BookingForm(forms.Form):
         if not date or not shift:
             return
 
+        if date < date.today():
+            raise ValidationError('La fecha elegida no es válida.')
+
         delta = config.BOOKING_DAYS_FUTURE
         if (date - date.today()).days > delta:
             msg = 'No puede reservar con más de {delta} días de anticipación.'
