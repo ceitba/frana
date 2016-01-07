@@ -52,7 +52,17 @@ body {
   box-shadow: 0 0 8px #B9B4A8;
   border-radius: 3px;
   padding: 40px;
-  margin-bottom: 40px;
+}
+
+.page-footer, .page-sidebar {
+  color: #9C8F71;
+  margin: 15px 0 40px;
+  overflow: auto;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7);
+}
+
+.page-footer a, .page-sidebar a {
+  color: #9C8F71;
 }
 
 .page-sidebar {
