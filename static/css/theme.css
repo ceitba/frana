@@ -92,7 +92,10 @@ body {
   font-family: "Permanent Marker", "Roboto", Helvetica, Arial, sans-serif;
   font-size: 1.4em;
   margin-top: 80px;
-  padding-left: 20px;
+}
+
+.page-sidebar img {
+  width: 100%;
 }
 
 .page-sidebar p {
