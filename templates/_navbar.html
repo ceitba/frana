@@ -42,6 +42,7 @@
               $ {% if credits >= 0 %}{{ credits }}{% else %}<b class="negative-credits">{{ credits }}</b>{% endif %}
               {% endwith %}
             </li>
+            <li><a href="{% url 'password_change' %}">Cambiar contraseña</a></li>
             <li><a href="{% url 'bookings:logout' %}">Salir</a></li>
           </ul>
         </li>
