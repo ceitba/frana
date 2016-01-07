@@ -74,8 +74,15 @@ body {
 }
 
 .page-sidebar {
+  color: #B3A681;
+  font-family: "Permanent Marker", "Roboto", Helvetica, Arial, sans-serif;
+  font-size: 1.4em;
   margin-top: 80px;
   padding-left: 20px;
+}
+
+.page-sidebar a {
+  color: #B3A681;
 }
 
 .btn-primary {
