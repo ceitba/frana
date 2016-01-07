@@ -83,6 +83,12 @@ body {
   padding-left: 20px;
 }
 
+.page-sidebar p {
+  transform: translateY(-30px) rotate(-10deg);
+  margin: 0 auto;
+  width: 75%;
+}
+
 .page-sidebar a {
   color: #B3A681;
 }
