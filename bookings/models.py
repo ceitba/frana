@@ -20,6 +20,7 @@ class BookerProfile(models.Model):
     phone_number = models.CharField(max_length=16, verbose_name="Teléfono")
     student_file = models.PositiveIntegerField(verbose_name="Legajo")
     credits = models.IntegerField(default=1000, verbose_name="Créditos")  # TODO: Change this once in production
+    debit_credits = models.BooleanField(default=False, verbose_name="Debitar créditos")
 
     def __unicode__(self):
         return self.user.get_full_name()

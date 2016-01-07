@@ -35,7 +35,10 @@
       <p class="navbar-text pull-right">
         <span class="m-r-md">{{ request.user.get_full_name }}</span>
         {% if request.user.bookerprofile %}
-        <img src="{% static "credits.png" %}" width="16" height="16" alt="Credits"> $ {{ request.user.bookerprofile.credits }}
+        {% with credits=request.user.bookerprofile.credits %}
+        <img src="{% static "credits.png" %}" width="16" height="16" alt="Credits">
+        $ {% if credits >= 0 %}{{ credits }}{% else %}<b class="negative-credits">{{ credits }}</b>{% endif %}
+        {% endwith %}
         {% endif %}
       </p>
       {% else %}
