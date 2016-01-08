@@ -1,5 +1,3 @@
-from datetime import date
-
 from bootstrap3.renderers import FieldRenderer as BaseFieldRenderer
 from django import forms
 

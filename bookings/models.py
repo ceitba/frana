@@ -1,11 +1,10 @@
 # coding: utf-8
 from __future__ import unicode_literals
-from datetime import date
 
 from constance import config
 from django.conf import settings
 from django.core.exceptions import ValidationError
-from django.db import models, transaction
+from django.db import models
 from django_extensions.db.models import TimeStampedModel
 
 

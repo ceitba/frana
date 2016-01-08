@@ -1,0 +1,6 @@
+[MASTER]
+load-plugins=pylint_django
+good-names=urlpatterns,application,qs
+
+[MESSAGES_CONTROL]
+disable=missing-docstring

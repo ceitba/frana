@@ -82,7 +82,7 @@ class SignupForm(forms.ModelForm):
             last_name=self.cleaned_data['last_name'],
             email=self.cleaned_data['email'],
         )
-        user.set_password(self.cleaned_data['password']),
+        user.set_password(self.cleaned_data['password'])
         user.save()
 
         self.instance.user = user

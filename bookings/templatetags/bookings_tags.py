@@ -19,10 +19,10 @@ def date_range(start, end):
         date = date + timedelta(days=1)
 
 
-def group_by(iterable, fn):
+def group_by(iterable, keyfunc):
     rv = {}
     for obj in iterable:
-        key = fn(obj)
+        key = keyfunc(obj)
         rv.setdefault(key, [])
         rv[key].append(obj)
     return rv
