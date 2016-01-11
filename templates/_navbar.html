@@ -48,7 +48,7 @@
         </li>
       </ul>
       {% else %}
-      <ul class="nav navbar-nav pull-right">
+      <ul class="nav navbar-nav navbar-right">
         <li{% if url_name == 'signup' %} class="active"{% endif %}><a href="{% url 'bookings:signup' %}">Registrarme</a></li>
         <li{% if url_name == 'login' %} class="active"{% endif %}><a href="{% url 'bookings:login' %}">Ingresar</a></li>
       </ul>
