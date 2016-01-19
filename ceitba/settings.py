@@ -60,7 +60,6 @@ INSTALLED_APPS = [
     'constance',
     'constance.backends.database',
     'django_extensions',
-    # 'pipeline',
 
     # Own apps
     'bookings',
@@ -213,27 +212,6 @@ CONSTANCE_CONFIG = {
     'BOOKING_DISABLED': (False, 'Deshabilitar reservas'),
     'BOOKING_DISABLED_CAUSE': ('', 'Causa por la cual están deshabilitadas las reservas'),
     'BOOKING_DAYS_FUTURE': (14, 'Cantidad de días a futuro que se pueden realizar las reservas'),
-}
-
-
-# Pipeline
-
-PIPELINE = {
-    'PIPELINE_ENABLED': False,
-    'STYLESHEETS': {
-        'styles': {
-            'source_filenames': [
-                'js/jquery.js',
-                'js/d3.js',
-                'js/collections/*.js',
-                'js/application.js',
-            ],
-            'output_filename': 'js/stats.js',
-        }
-    },
-    'COMPILERS': {
-        'pipeline.compilers.sass.SASSCompiler',
-    }
 }
 
 
