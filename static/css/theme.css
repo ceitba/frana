@@ -178,3 +178,19 @@ body {
     text-align: center;
   }
 }
+
+.error-page {
+  margin-top: 90px;
+}
+
+.error-page-code, .error-page-message {
+  text-align: center;
+  color: #B3A681;
+  font-family: "Permanent Marker", "Roboto", Helvetica, Arial, sans-serif;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7);
+  transform: rotate(-6deg);
+}
+
+.error-page-code {
+  font-size: 130px;
+}
