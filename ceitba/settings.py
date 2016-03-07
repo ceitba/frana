@@ -21,16 +21,11 @@ from django.contrib.messages import constants as messages
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
+SECRET_KEY = os.environ.get('SECRET_KEY', '^rdik=fk%r&#$$)0m&a0bch^_@gswfa6bon7x5tk#4qze5b04m')
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'd-u2-!18(xgc3s-_s40e_1c_bx@+2z(wjpz2q1c^=d*ht!y*y!'
-
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['frana.ceitba.org']
 
 LOGIN_URL = reverse_lazy('bookings:login')
 
@@ -104,6 +99,11 @@ WSGI_APPLICATION = 'ceitba.wsgi.application'
 
 SITE_ID = 1
 
+CSRF_COOKIE_HTTPONLY = True
+
+SECURE_CONTENT_TYPE_NOSNIFF = True
+SECURE_BROWSER_XSS_FILTER = True
+X_FRAME_OPTIONS = 'DENY'
 
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
