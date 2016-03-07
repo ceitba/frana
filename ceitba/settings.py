@@ -25,7 +25,10 @@ SECRET_KEY = os.environ.get('SECRET_KEY', '^rdik=fk%r&#$$)0m&a0bch^_@gswfa6bon7x
 
 DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 
-ALLOWED_HOSTS = ['frana.ceitba.org']
+ALLOWED_HOSTS = [
+    'frana.ceitba.org.ar',
+    'ceitba-frana.herokuapp.com',
+]
 
 LOGIN_URL = reverse_lazy('bookings:login')
 
