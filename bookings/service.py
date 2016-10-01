@@ -16,14 +16,18 @@ class HolidayUpdater(object):
         self.year = year or date.today().year
 
     def update(self):
-        # Response if of type:
+        # Response is of type:
         # [{"dia":1,"mes":1,"motivo":"Año Nuevo","tipo":"inamovible"}, ...]
+
         url = self.BASE_URL + unicode(self.year)
-        data = requests.get(url).json()
+        data = requests.get(url, params={'excluir': 'opcional'}).json()
 
         added = 0
         for item in data:
-            day = date(self.year, item['mes'], item['dia'])
+            if 'traslado' in item:
+                day = date(self.year, item['mes'], item['traslado'])
+            else:
+                day = date(self.year, item['mes'], item['dia'])
 
             if Holiday.objects.filter(date=day).exists():
                 continue
