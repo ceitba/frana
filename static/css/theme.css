@@ -11,10 +11,6 @@ body {
   background-color: #2987AD;
   border-color: #2987AD;
   box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
-	background-image: -webkit-linear-gradient(top,#2987AD 0,#096C94 100%);
-	background-image: -o-linear-gradient(top,#2987AD 0,#096C94 100%);
-	background-image: -webkit-gradient(linear,left top,left bottom,from(#2987AD),to(#096C94));
-	background-image: linear-gradient(to bottom,#2987AD 0,#096C94 100%);
 }
 
 .navbar-inverse .navbar-brand {
