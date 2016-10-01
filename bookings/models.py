@@ -8,6 +8,17 @@ from django.db import models
 from django_extensions.db.models import TimeStampedModel
 
 
+class Holiday(models.Model):
+    description = models.CharField(max_length=90, verbose_name="Descripción")
+    date = models.DateField(unique=True)
+
+    class Meta:
+        verbose_name = "Feriado"
+
+    def __unicode__(self):
+        return unicode(self.date)
+
+
 class BookerProfile(models.Model):
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL,
