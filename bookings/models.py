@@ -84,8 +84,11 @@ class Booking(TimeStampedModel):
             msg = 'Ya hay una reserva confirmada para esa fecha y turno.'
             raise ValidationError(msg)
 
+    def _is_holiday(self, date):
+        return Holiday.objects.filter(date=date).exists()
+
     def get_price(self):
-        if self.date.weekday() in [5, 6]:  # weekend
+        if self._is_holiday(self.date) or self.date.weekday() in [5, 6]:  # weekend
             return config.WEEKEND_PRICE
         else:
             return config.WEEKDAY_PRICE
