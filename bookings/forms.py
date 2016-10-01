@@ -18,11 +18,21 @@ class AuthenticationForm(DjangoAuthenticationForm):
     username = forms.EmailField(label="Email")
 
 
+class EmailDomainValidator(object):
+    domain = 'itba.edu.ar'
+
+    def __call__(self, value):
+        if not value.endswith(self.domain):
+            raise ValidationError('Debes utilizar tu email @' + self.domain)
+
+
+
 class SignupForm(forms.ModelForm):
     first_name = forms.CharField(label="Nombre")
     last_name = forms.CharField(label="Apellido(s)")
     email = forms.EmailField(
         label="Email",
+        validators=[EmailDomainValidator()]
     )
     password = forms.CharField(
         label="Contraseña",
