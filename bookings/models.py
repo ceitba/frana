@@ -22,6 +22,9 @@ class BookerProfile(models.Model):
     credits = models.IntegerField(default=0, verbose_name="Créditos")
     debit_credits = models.BooleanField(default=False, verbose_name="Debitar créditos")
 
+    class Meta:
+        verbose_name = "Navegante"
+
     def __unicode__(self):
         return self.user.get_full_name()
 
@@ -52,6 +55,9 @@ class Booking(TimeStampedModel):
         verbose_name="Estado"
     )
 
+    class Meta:
+        verbose_name = "Reserva"
+
     def __unicode__(self):
         return '{} a la {} por {}'.format(
             self.date, self.get_shift_display(), self.user)
@@ -78,3 +84,6 @@ class Credit(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
     amount = models.DecimalField(max_digits=8, decimal_places=2)
     comment = models.CharField(max_length=300)
+
+    class Meta:
+        verbose_name = "Crédito"
