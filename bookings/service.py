@@ -33,7 +33,7 @@ class HolidayUpdater(object):
                 continue
 
             Holiday.objects.create(
-                date=day, description=item.get('motivo')
+                date=day, description=item.get('motivo', '')
             )
             added += 1
         return added
