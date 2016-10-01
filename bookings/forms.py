@@ -4,6 +4,7 @@ from datetime import date, timedelta
 
 from constance import config
 from django import forms
+from django.contrib.auth.forms import AuthenticationForm as DjangoAuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.auth.password_validation import password_validators_help_text_html, validate_password
 from django.core.exceptions import ValidationError
@@ -11,6 +12,10 @@ from django.db import transaction
 
 from .fields import BootstrapDatepickerField
 from .models import BookerProfile, Booking
+
+
+class AuthenticationForm(DjangoAuthenticationForm):
+    username = forms.EmailField(label="Email")
 
 
 class SignupForm(forms.ModelForm):
