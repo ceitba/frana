@@ -101,3 +101,6 @@ class Credit(models.Model):
 
     class Meta:
         verbose_name = "Crédito"
+
+    def __unicode__(self):
+        return '{} for {}'.format(self.amount, self.user)
