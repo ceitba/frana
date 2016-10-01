@@ -1,0 +1,8 @@
+machine:
+  services:
+    - postgresql
+  python:
+    version: 2.7.11
+dependencies:
+  post:
+    - pip install -r dev-requirements.txt
