@@ -5,3 +5,8 @@
 .module h2, .module caption, .inline-group h2 {
   background-color: #517b23;
 }
+
+div.breadcrumbs {
+  background: #7cab4a;
+  color: #b9d899;
+}
