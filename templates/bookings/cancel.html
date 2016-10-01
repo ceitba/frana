@@ -3,7 +3,10 @@
 
 {% block content %}
 
-<p>Estás cancelando la reserva para el día <strong>{{ booking.date }} a la {{ booking.get_shift_display|lower }}</strong>.</p>
+<p>
+  Estás cancelando tu reserva para el día <strong>{{ booking.date }} a la {{ booking.get_shift_display|lower }}</strong>.
+  Confirmá haciendo clic en el botón que se muestra abajo.
+</p>
 
 <hr>
 
